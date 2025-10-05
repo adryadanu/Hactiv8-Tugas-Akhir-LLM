@@ -27,10 +27,10 @@ with st.sidebar:
         options=["Formal", "Santai", "Persuasif", "Motivasi", "Humor"]
     )
     
-    # Kreativitas (temperature)
+    # Kreatifitas (temperature)
     temperature = st.slider("Kreatifitas respon (temperature):", min_value=0.0, max_value=1.0, value=0.7, step=0.05)
     
-    # Reset conversation
+    # Reset
     reset_button = st.button("Hapus Percakapan", help="hapus semua pesan")
 
 # --- 3. API Key and Agent Initialization ---
@@ -58,7 +58,7 @@ if ("agent" not in st.session_state) or (getattr(st.session_state, "_last_key", 
 
         st.session_state.agent = create_react_agent(
             model=llm,
-            tools=[],  # Bisa ditambah tools API eksternal nanti
+            tools=[], 
             prompt=prompt_prefix
         )
         
@@ -66,7 +66,7 @@ if ("agent" not in st.session_state) or (getattr(st.session_state, "_last_key", 
         st.session_state._last_domain = domain
         st.session_state._last_style = style
         st.session_state._last_temp = temperature
-        st.session_state.pop("messages", None)  # Clear messages on new setup
+        st.session_state.pop("messages", None) 
     except Exception as e:
         st.error(f"API Key yang Anda masukkan salah: {e}")
         st.stop()
@@ -102,8 +102,7 @@ if prompt:
         elif msg["role"] == "assistant":
             messages.append(AIMessage(content=msg["content"]))
     
-    # Optional: contoh integrasi API eksternal sederhana berdasarkan domain
-    # Misal, kalau domain Travel, bisa kita tambahkan rekomendasi destinasi (dummy)
+    
     def external_api_integration(user_message, domain):
         if domain == "Travel":
             # Dummy API response, misal rekomendasi tempat wisata
